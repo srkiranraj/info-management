@@ -1,0 +1,95 @@
+<html>
+<head>
+	<title>Help - Chennai Floods</title>
+	<link rel="stylesheet" type="text/css" href="form.css">
+</head>
+<body>
+	<div class="title">
+		<h2>Chennai/Cuddalore Floods Information</h2>
+	</div>
+	<div class="wrapper">
+		<div class="container">
+			<div class="title">
+				<h2>Fill below form if you need help || <small><a href="/">Home</a></small></h2>
+			</div>
+			<form id="need_html">
+				<div id="message" class="success error"></div>
+				<div class="entry">
+					<label for="name">Name</label>
+					<input type="text" name="name" id="name">
+				</div>
+				<div class="entry">
+					<label for="phone">Phone</label>
+					<input type="text" name="phone" id="phone">
+				</div>
+				<div class="entry">
+					<label for="address">Address</label>
+					<textarea name="address" id="address"></textarea>
+				</div>
+				<div class="entry">
+					<label for="details">Details</label>
+					<textarea name="details" id="details"></textarea>
+				</div>
+				<div class="button-group entry">
+					<a href="#" class="action-button" id="submit" onclick="submitInfo();">Submit</a>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript">
+	function submitInfo(){
+		var name = document.getElementById("name").value;
+		var phone = document.getElementById("phone").value;
+		var address = document.getElementById("address").value;
+		var details = document.getElementById("details").value;
+
+		if (name == "" && phone == "" && address == "" && details == "")
+		{
+			var message = "Specify some information inorder for someone to help you!";
+			document.getElementById("message").className = "error";
+			document.getElementById("message").innerHTML = message;
+		}
+		else
+		{
+			var message = "Submitting information ...";
+			document.getElementById("message").className = "success";
+			document.getElementById("message").innerHTML = message;
+			
+			httpRequest = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+			httpRequest.onreadystatechange = function() {
+				if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+					var response = JSON.parse(httpRequest.responseText);
+					if(response.status == "error")
+					{
+						var message = "Something went wrong! Try again later.";
+						document.getElementById("message").className = "error";
+						document.getElementById("message").innerHTML = message;
+					}
+					else if(response.status == "empty")
+					{
+						var message = "Specify some information inorder for someone to help you!";
+						document.getElementById("message").className = "error";
+						document.getElementById("message").innerHTML = message;
+					}
+					else if(response.status == "success")
+					{
+						var message = "Great! We have added your information.";
+						document.getElementById("message").className = "success";
+						document.getElementById("message").innerHTML = message;
+						document.getElementById("name").value = "";
+						document.getElementById("phone").value = "";
+						document.getElementById("address").value = "";
+						document.getElementById("details").value = "";			
+					}
+				}
+			};
+			httpRequest.open("POST", "insert_help.php", true);
+			httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			httpRequest.send("name="+name+"&phone="+phone+"&address="+address+"&details="+details);	
+		}		
+	}
+</script>
+
+</html>

@@ -1,0 +1,94 @@
+<html>
+<head>
+	<title>Help - Chennai Floods</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<div class="title">
+		<h2>Chennai/Cuddalore Floods Information</h2>
+	</div>
+	<div class="wrapper">
+		<div class="container">
+			<div class="left half">
+				<div class="button-group">
+					<a class="action-button" href="need_help.html">Click here, if you need help.</a>
+				</div>
+				<div class="sub-title">
+					<h3>Information of people who need help.</h3>
+				</div>
+				<div id="help" class="list">
+					<div class="loading">Loading info, please wait ...</div>
+				</div>
+			</div>
+			<div class="right half">
+				<div class="button-group">
+					<a class="action-button" href="can_help.html">Click here, if you can help.</a>
+				</div>
+				<div class="sub-title">
+					<h3>Information of people who can help.</h3>
+				</div>
+				<div id="helper" class="list">
+					<div class="loading">Loading info, please wait ...</div>
+				</div>
+			</div>
+			<div class="clear"></div>		
+		</div>
+	</div>
+	<div class="footer">
+		<small>You can reach me at srkiranraj@gmail.com for any help maintaining this site. Also fork in github and contribute. Quickly coded this up to be lightweight so it can even load in 2G mobiles too.</small>
+	</div>
+</body>
+
+<script type="text/javascript">
+
+	function getString(type, obj){
+		var message = "";
+		for(var each in obj)
+		{
+			if (obj.hasOwnProperty(each)) {
+				var item = obj[each];
+				message += "<div class='item'>";
+				message += "<div class='name'>"+ item.name +"</div>";
+				message += "<div class='phone'><strong>Phone: </strong>"+ item.phone +"</div>";
+				if(type == "help")
+					message += "<div class='address'><strong>Address: </strong>"+ item.address +"</div>";
+				message += "<div class='details'>"+ item.details +"</div>";
+				var t = item.timestamp.split(/[- :]/);
+				var d = new Date(t[0], t[1]-1, t[2], t[3], t[4], t[5]);
+				message += "<div class='timestamp'><strong>Posted on: </strong>"+ d.toDateString() +"</div>";
+				message += "</div>";
+			}
+		}
+		return message;
+	}
+
+	function getList(url){
+		httpRequest = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+		httpRequest.onreadystatechange = function() {
+			if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+				var response = JSON.parse(httpRequest.responseText);
+				if(response.status == "error")
+				{
+					var message = "Sorry! We are working hard to resolve this issue.";
+					document.getElementById("help").innerHTML = message;
+					document.getElementById("helper").innerHTML = message;
+				}
+				else if(response.status == "success")
+				{
+					var help_list = getString("help", response.help);
+					var helper_list = getString("helper", response.helper);
+					document.getElementById("help").innerHTML = help_list;
+					document.getElementById("helper").innerHTML = helper_list;
+				}
+			}
+		};
+		httpRequest.open("GET", "get_help.php", true);
+		httpRequest.send();
+	}
+
+	(function() {
+		getList();
+	})();
+</script>
+
+</html>

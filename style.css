@@ -1,0 +1,56 @@
+body, a{
+	font-family: 'Arial', sans-serif;
+}
+.clear{
+	clear: both;
+}
+.title{
+	margin-bottom: 40px;
+	text-align: center;
+}
+.sub-title{
+	text-align: center;
+	margin: 0 10%;
+}
+.half{
+	display: inline-block;
+	width: 50%;
+}
+.left{
+	float: left;
+}
+.right{
+	float: right;
+}
+.button-group{
+	text-align: center;
+	padding-bottom: 30px;
+	margin-bottom: 40px;
+	border-bottom: 1px solid;
+}
+.action-button{
+	text-decoration: none;
+	border: 1px solid;
+	font-size: 16px;
+	padding: 10px 25px;
+}
+.list{
+	margin: 0px 10%;
+}
+.item{
+	margin-bottom: 40px;
+}
+.item .name{
+	font-weight: bold;
+	background: lightgrey;
+	padding: 10px;
+}
+.item .phone, .item .address, .item .details, .item .timestamp{
+	margin-top: 5px;
+	line-height: 21px;
+	word-wrap: break-word;
+}
+.footer{
+	width: 80%;
+	margin: 20px auto;
+}

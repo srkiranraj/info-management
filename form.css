@@ -1,0 +1,48 @@
+body, a, input, textarea{
+	font-family: 'Arial', sans-serif;
+}
+.clear{
+	clear: both;
+}
+.title{
+	text-align: center;
+}
+form{
+	width: 400px;
+	margin: auto;
+}
+.entry{
+	margin: 5px 0px; 
+	padding: 5px 0px; 
+}
+.button-group{
+	text-align: center;
+	margin-top: 20px;
+}
+label{
+	display: block;
+}
+input{
+	width: 380px;
+	height: 30px;
+}
+textarea{
+	width: 380px;
+	height: 100px;
+}
+.action-button{
+	text-decoration: none;
+	border: 1px solid;
+	font-size: 16px;
+	padding: 10px 25px;
+}
+#message{
+	margin: 20px 0px;
+	padding: 5px 0px;
+}
+.success{
+	color: green;
+}
+.error{
+	color: red;
+}
